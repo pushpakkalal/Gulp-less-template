@@ -1,0 +1,31 @@
+// Typography
+
+// Font stacks for easy inclusion and customization
+@font-family-sans-serif:  "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-family-serif:       Georgia, "Times New Roman", Times, serif;
+@font-family-monospace:   Monaco, Menlo, Consolas, "Courier New", monospace;
+@font-family-base:        @font-family-sans-serif;
+
+// Generate a straightforward type scale
+@font-size-base:          14px;
+@font-size-large:         @font-size-base * 1.25; // ~18px
+@font-size-small:         @font-size-base * 0.85; // ~12px
+@font-size-mini:          @font-size-base * 0.75; // ~11px
+
+// Baseline for the line-height of the body
+// To be used in conjunction with @font-size-base
+@line-height-base:        20px;
+
+// Enable the option to customize headings
+@headings-font-family:    inherit; // From @font-family-base
+@headings-font-weight:    500;
+
+// Usage
+a {
+    //color: @link-color;
+    text-decoration: none; 
+    &:hover {
+	   //color: @link-color-hover;
+       text-decoration: underline;
+	}
+}

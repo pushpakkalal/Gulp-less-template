@@ -1,0 +1,82 @@
+//============================================================
+// All Box Mixins
+//============================================================
+
+// -----------------------------------------------------------
+// [1]. display-box Mixins
+// -----------------------------------------------------------
+.display-box() {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-box;
+    display: -o-box;
+    display: box;
+}
+// uses: 
+// .display-box();
+
+// [2]. box-orient Mixins
+// Posible Values
+// horizontal || vertical || inline-axis || block-axis || inherit || initial || unset
+.box-orient(@arguments) {
+    .display-box();
+    -webkit-box-orient: @arguments;
+       -moz-box-orient: @arguments;
+        -ms-box-orient: @arguments;
+         -o-box-orient: @arguments;
+            box-orient: @arguments;
+}
+// uses: 
+// .box-orient(horizontal);
+
+// -----------------------------------------------
+//[3]. box-pack Mixins
+// Posible Values
+// start || center || end || justify || inherit || initial || unset
+// -----------------------------------------------
+//Function: 
+.box-pack(@arguments) {
+    .display-box();
+    -webkit-box-pack: @arguments;
+       -moz-box-pack: @arguments;
+        -ms-box-pack: @arguments;
+         -o-box-pack: @arguments;
+            box-pack: @arguments;
+}
+// uses: 
+// .box-pack(start);
+
+// -------------------------------------------------
+//[4]. box-align Mixins
+// Posible Values
+// start | center | end | baseline | stretch
+// -----------------------------------------------
+//Function: 
+.box-align(@arguments) {
+    .display-box();
+    -webkit-box-align: @arguments;
+       -moz-box-align: @arguments;
+        -ms-box-align: @arguments;
+         -o-box-align: @arguments;
+            box-align: @arguments;
+}
+// uses: 
+// .box-align(start);
+
+
+// -------------------------------------------------
+//[5]. box-flex Mixins
+// Posible Values in <number>
+// 0 | 2 | 3.5 | inherit | initial | unset
+// -----------------------------------------------
+//Function: 
+.box-flex(@arguments) {
+    .display-box();
+    -webkit-box-flex: @arguments;
+       -moz-box-flex: @arguments;
+        -ms-box-flex: @arguments;
+         -o-box-flex: @arguments;
+            box-flex: @arguments;
+}
+// uses: 
+// .box-flex(1);

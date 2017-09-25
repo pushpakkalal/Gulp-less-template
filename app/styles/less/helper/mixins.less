@@ -1,0 +1,700 @@
+@import 'function/easing.less';
+@import 'function/to-rem.less';
+@import 'function/flex-box.less';
+@import 'function/box.less';
+@import 'function/tringle.less';
+
+//[1]. Less responsive media query / breckpoint Mixins option used as max width => checked
+.responsive(@maxWidth; @rules) {
+    @media only screen and (max-width: @maxWidth) {
+        @rules();
+    }
+}
+
+// Usage 
+/*.bacon {
+    width: 100%;
+
+    .responsive(450px, {
+        float: left;
+        margin-top: 10px;
+    });
+}*/
+
+/* Outputted css */
+/*.bacon {
+  width: 100%;
+}*/
+
+/* @media only screen and (max-width: 450px) {
+  .bacon {
+    float: left;
+    margin-top: 10px;
+  }
+}*/
+
+//[1]. Less responsive media query / breckpoint Mixins option
+/* =============================================================================
+   Screen size variables
+   ========================================================================== */
+
+@screen-xs:                        480px;
+@screen-xs-min:                    @screen-xs;
+@screen-sm:                        768px;
+@screen-sm-min:                    @screen-sm;
+@screen-md:                        992px;
+@screen-md-min:                    @screen-md;
+@screen-lg:                        1200px;
+@screen-lg-min:                    @screen-lg;
+@screen-xl:                        1600px;
+@screen-xl-min:                    @screen-xl;
+@screen-xs-max:                    ( @screen-sm-min - 1 );
+@screen-sm-max:                    ( @screen-md-min - 1 );
+@screen-md-max:                    ( @screen-lg-min - 1 );
+@screen-lg-max:                    ( @screen-xl-min - 1 );
+@tablet_min: 768px;
+@tablet_max: 1024px;
+
+/* =============================================================================
+   Media queries for different screen sizes
+   ========================================================================== */
+
+// xs only
+//------------------------------------
+.screen-xs(@rules) {
+    @media (max-width: @screen-xs-max) { @rules(); }
+}
+/* uses:
+.screen-xs({ 
+
+});*/
+
+// sm and larger
+//------------------------------------
+.screen-sm-min(@rules) {
+    @media (min-width: @screen-sm-min) { @rules(); }
+}
+/*uses:
+.screen-sm-min({ 
+    
+});*/
+
+// sm only
+//------------------------------------
+.screen-sm(@rules) {
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) { @rules(); }
+}
+/* uses:
+.screen-sm({ 
+
+}); */
+
+// sm and smaller
+//------------------------------------
+.screen-sm-max(@rules) {
+    @media (max-width: @screen-sm-max) { @rules(); }
+}
+/* uses:
+.screen-sm-max({ 
+
+}); */
+
+// md and larger
+//------------------------------------
+.screen-md-min(@rules) {
+    @media (min-width: @screen-md-min) { @rules(); }
+}
+/* uses:
+.screen-md-min({ 
+
+}); */
+
+
+// md only
+//------------------------------------
+.screen-md(@rules) {
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) { @rules(); }
+}
+/* uses:
+.screen-md({ 
+
+}); */
+
+
+// md and smaller
+//------------------------------------
+.screen-md-max(@rules) {
+    @media (max-width: @screen-md-max) { @rules(); }
+}
+/* uses:
+.screen-md-max({ 
+
+}); */
+
+// lg and larger
+//------------------------------------
+.screen-lg-min(@rules) {
+    @media (min-width: @screen-lg-min) { @rules(); }
+}
+/* uses:
+.screen-lg-min({ 
+
+}); */
+
+// lg only
+//------------------------------------
+.screen-lg(@rules) {
+    @media (min-width: @screen-lg-min) and (max-width: @screen-lg-max) { @rules(); }
+}
+/* uses:
+.screen-lg({ 
+
+}); */
+
+// lg and smaller
+//------------------------------------
+.screen-lg-max(@rules) {
+    @media (max-width: @screen-lg-max) { @rules(); }
+}
+/* uses:
+.screen-lg-max({ 
+
+}); */
+
+// xl and larger
+//------------------------------------
+.screen-xl(@rules) {
+    @media (min-width: @screen-xl-min) { @rules(); }
+}
+/* uses:
+.screen-xl({ 
+
+}); */
+
+// 1: xs only, 2: sm and larger
+.screen(@rules-xs, @rules-sm) {
+    .screen-xs(@rules-xs);
+    .screen-sm-min(@rules-sm);
+}
+
+// 1: xs only, 2: sm only, 3: md and larger
+.screen(@rules-xs, @rules-sm, @rules-md) {
+    .screen-xs(@rules-xs);
+    .screen-sm(@rules-sm);
+    .screen-md-min(@rules-md);
+}
+
+// 1: xs only, 2: sm only, 3: md only, 4: lg and larger
+/*.screen(@rules-xs, @rules-sm, @rules-md, @rules-lg) {
+    .screen-xs(@rules-xs);
+    .screen-sm(@rules-sm);
+    .screen-md(@rules-md);
+    .screen-lg-min(@rules-lg);
+}*/
+
+// 1: xs only, 2: sm only, 3: md only, 4: lg only, 5: xl and larger
+/*.screen(@rules-xs, @rules-sm, @rules-md, @rules-lg, @rules-xl) {
+    .screen-xs(@rules-xs);
+    .screen-sm(@rules-sm);
+    .screen-md(@rules-md);
+    .screen-lg(@rules-lg);
+    .screen-xl(@rules-xl);
+}*/
+
+// Usage:
+// 
+// .my-element {
+//   .screen({
+//     color: red;    // xs and up
+//   },{
+//     color: green;  // sm and up
+//   },{
+//     color: yellow; // md and up
+//   }
+// }
+
+// Ipad orientation base(landscap) Media query 
+//------------------------------------
+.tablet_max(@rules) {
+    @media (min-width: @tablet_min) and (max-width: @tablet_max) and (orientation : landscape) { @rules(); }
+}
+/* uses:
+.tablet_max({ 
+
+}); */
+
+// Ipad orientation base(portrait) Media query 
+//------------------------------------
+.tablet_min(@rules) {
+    @media (min-width: @tablet_min) and (max-width: @tablet_max) and (orientation : portrait) { @rules(); }
+}
+/* uses:
+.tablet_min({ 
+
+}); */
+
+/* // ======================================================
+//[2]. Disable default form input appearance in Webkit & FF => Checked
+// ====================================================== */
+.appearance(@appearance: none) {
+  -webkit-appearance: @appearance;
+  -moz-appearance: @appearance;
+  appearance: @appearance;
+}
+// uses
+// .appearance(button);
+
+// ======================================================
+//[3]. Box-shadow Mixins.  => Checked
+// ======================================================
+// Function:
+.box-shadow(@x: 0, @y: 0, @blur: 1px, @spread: 0, @color: #000) {
+  box-shadow: @arguments;
+  -moz-box-shadow: @arguments;
+  -webkit-box-shadow: @arguments;
+}
+// uses:
+// .box-shadow(2px, 5px, 1px, 5px, rgba(0,0,0,0.5));
+
+// ======================================================
+//[4]. Inner Box-shadow Mixins.  => Checked
+// ======================================================
+.inner-box-shadow(@x: 0, @y: 0, @blur: 1px, @spread: 0, @color: #000) {
+    -webkit-box-shadow: inset @x @y @blur @spread rgba(0, 0, 0, 0.5);
+    -moz-box-shadow:    inset @x @y @blur @spread rgba(0, 0, 0, 0.5);
+    box-shadow:         inset @x @y @blur @spread rgba(0, 0, 0, 0.5);
+}
+// uses:
+//.inner-box-shadow(2px, 5px, 1px, 5px, rgba(0,0,0,0.5));
+
+// ======================================================
+//[5]. Box-sizing Mixins.  => Checked
+// ======================================================
+// Function:
+.box-sizing (@type: border-box) {
+    -webkit-box-sizing: @type;
+    -moz-box-sizing:    @type;
+    box-sizing:         @type;
+}
+// uses:
+// .box-sizing(border-box);
+
+// ======================================================
+//[6]. Border radius Mixins. => Checked
+// ======================================================
+// Function:
+.border-radius (@radius: 5px) {
+    -webkit-border-radius: @radius;
+    -moz-border-radius:    @radius;
+    border-radius:         @radius;
+
+    -moz-background-clip:    padding;
+    -webkit-background-clip: padding-box;
+    background-clip:         padding-box;
+}
+
+// uses:
+// .border-radius(20px);
+
+// ======================================================
+//[7]. Border Radius Custom. => Checked
+// ======================================================
+.border-radius-custom (@topleft: 5px, @topright: 5px, @bottomleft: 5px, @bottomright: 5px) {
+    -webkit-border-radius: @topleft @topright @bottomright @bottomleft;
+       -moz-border-radius: @topleft @topright @bottomright @bottomleft;
+            border-radius: @topleft @topright @bottomright @bottomleft;
+}
+// uses
+// .border-radius-custom(20px, 20px, 0px, 0px);
+
+//========================================================
+// [8]. Opacity Mixins => Checked
+// =======================================================
+// Function:
+.opacity(@opacity) {
+  @mfopacity: @opacity*100;
+  @fopacity: "alpha(opacity=@{mfopacity})";
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=@{mfopacity})";
+  filter: ~"@{fopacity}";
+  -webkit-opacity: @opacity;
+  -moz-opacity: @opacity;
+  opacity: @opacity;
+}
+// uses: 
+// .opacity(0.5);
+
+//========================================================
+// [9]. Animation Mixins => Checked
+// =======================================================
+// Function:
+.animation (@name, @duration: 300ms, @delay: 0, @ease: ease) {
+    -webkit-animation: @name @duration @delay @ease;
+    -moz-animation:    @name @duration @delay @ease;
+    -ms-animation:     @name @duration @delay @ease;
+}
+
+// Uses:
+//.animation(fade-in 0.2s linear infinite alternate)
+
+//========================================================
+// [10]. background-size Mixins => Checked
+// =======================================================
+// Function:
+.background-size(@arguments) {
+    -webkit-background-size: @arguments;
+    -moz-background-size: @arguments;
+    background-size: @arguments;
+}
+// Uses:
+/*.div {
+    .background-size(100%);
+}*/
+
+//========================================================
+// [11]. transition Mixins => Checked
+// =======================================================
+// Function:
+.transition (@transition) {
+    -webkit-transition: @transition;  
+    -moz-transition:    @transition;
+    -ms-transition:     @transition; 
+    -o-transition:      @transition;  
+}
+// Uses:
+// .transition (all 200ms linear 0ms);
+
+//========================================================
+// [12]. Clearfix Mixins => Checked
+// =======================================================
+// Function:
+.clearfix () {
+  *zoom: 1;
+  &:before, &:after {
+    content: "";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+}
+//Uses:
+//.clearfix();
+
+//========================================================
+// [13]. scale Mixins => Checked
+// =======================================================
+// Function:
+.scale (@factor) {
+    -webkit-transform: scale(@factor);
+    -moz-transform:      scale(@factor);
+    -ms-transform:       scale(@factor);
+    -o-transform:        scale(@factor);
+}
+// Uses:
+//.scale(1);
+
+
+//========================================================
+// [14]. rotate Mixins => Checked
+// =======================================================
+// Function:
+.rotate (@deg) {
+    -webkit-transform: rotate(@deg);
+    -moz-transform:      rotate(@deg);
+    -ms-transform:       rotate(@deg);
+    -o-transform:        rotate(@deg);
+}
+// Uses:
+//.rotate (90deg);
+
+//========================================================
+// [15]. skew Mixins => Checked
+// =======================================================
+// Function:
+.skew (@deg, @deg2) {
+    -webkit-transform:       skew(@deg, @deg2);
+    -moz-transform:      skew(@deg, @deg2);
+    -ms-transform:       skew(@deg, @deg2);
+    -o-transform:        skew(@deg, @deg2);
+}
+// Uses:
+// .skew (90deg, -180deg);
+
+
+//========================================================
+// [16]. translate Mixins => Checked
+// =======================================================
+// Function:
+.translate (@x, @y:0) {
+    -webkit-transform:       translate(@x, @y);
+    -moz-transform:      translate(@x, @y);
+    -ms-transform:       translate(@x, @y);
+    -o-transform:        translate(@x, @y);
+}
+// Uses:
+//.translate (50%, 50%);
+
+
+//========================================================
+// [18]. translate3d Mixins => checked
+// =======================================================
+// Function:
+.translate3d (@x, @y: 0, @z: 0) {
+    -webkit-transform:       translate3d(@x, @y, @z);
+    -moz-transform:      translate3d(@x, @y, @z);
+    -ms-transform:       translate3d(@x, @y, @z);
+    -o-transform:        translate3d(@x, @y, @z);
+}
+// Uses:
+//.translate3d (50%, 50%, 50%);
+
+
+// =======================================================
+// [19]. perspective Mixins => Checked
+// =======================================================
+// Function:
+.perspective (@value: 1000) {
+    -webkit-perspective:    @value;
+    -moz-perspective:   @value;
+    -ms-perspective:    @value;
+    perspective:        @value;
+}
+// Uses:
+// .perspective(100px);
+
+// =======================================================
+// [20]. transform-origin Mixins => Checked
+// =======================================================
+// Function:
+.transform-origin (@x:center, @y:center) {
+    -webkit-transform-origin: @x @y;
+    -moz-transform-origin:    @x @y;
+    -ms-transform-origin:     @x @y;
+    -o-transform-origin:      @x @y;
+}
+// Uses:
+// .transform-origin(center center);
+
+// =======================================================
+// [20]. For flipping 3D cards Mixins  => Checked
+// =======================================================
+// Function:
+.backface-visibility(@visibility){
+    -webkit-backface-visibility: @visibility;
+       -moz-backface-visibility: @visibility;
+        -ms-backface-visibility: @visibility;
+         -o-backface-visibility: @visibility;
+            backface-visibility: @visibility;
+}
+// Uses:
+// .backface-visibility(@visibility);
+
+// ===========================================================
+// [21]. placeholder Mixins. => Checked
+// ===========================================================
+// Function: 
+.placeholder(@rules) {
+
+    &::-webkit-input-placeholder {
+        @rules();
+    }
+    &:-moz-placeholder {
+        @rules();
+    }
+    &::-moz-placeholder {
+        @rules();
+    }
+    &:-ms-input-placeholder {
+        @rules();
+    }
+}
+
+// Uses:
+//.placeholder({
+//  color: #0000FF;
+//  text-transform: uppercase;
+//});
+
+
+// ===========================================================
+// [22]. User Select Mixins. => Checked
+// =========================================================== 
+// Function:
+.user-select(@value) {
+  -webkit-user-select: @value;
+     -moz-user-select: @value;
+      -ms-user-select: @value;
+          user-select: @value;
+}
+// Uses:
+//.user-select(none);
+
+// -----------------------------------------------
+// [23]. text-truncate
+// ----------------------------------------------
+// Function: 
+.text-truncate() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// usege:
+// .branch-name {
+//    .text-truncate();
+// }
+
+// -----------------------------------------------
+//[24]. Maintain aspect ratio mixins => Checked
+// -----------------------------------------------
+.aspect-ratio(@width, @height) {
+  position: relative;
+  &:before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-top: (@height / @width) * 100%;
+  }
+  > .content {
+    position: absolute;
+    padding:10px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    span:before{
+      content:"@{width}";
+    }
+    
+    span:after{
+      content:"@{height}";
+    }
+  }
+}
+
+/* uses:
+.maintain-ratio {
+  .aspect-ratio(16, 9);
+  background:#000000;
+  color:#fff;
+  width:30%;
+} */
+
+
+// -----------------------------------------------
+// [25]. Calc Mixins => Checked
+// -----------------------------------------------
+.calc(@expression) { 
+      width: -moz-calc(@expression); 
+      width: -o-calc(@expression); 
+      width: -webkit-calc(@expression); 
+      width: calc(@expression);
+}
+/* uses:
+.calc(~"100% - 95px"); */
+
+// -----------------------------------------------
+// [26]. wrap Mixins
+// -----------------------------------------------
+.wrap() {
+  text-wrap: wrap;
+  white-space: -moz-pre-wrap;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+/* uses:
+pre { .wrap; } */
+
+// -----------------------------------------------
+// [27]. Fontstack Mixins
+// -----------------------------------------------
+.font(@fontFamily: Arial, sans-serif; @fontWeight: normal; @fontStyle: normal) {
+    font-family: @fontFamily;
+    font-style: @fontStyle;
+    font-weight: @fontWeight;
+}
+
+// Uses:
+/*.semibold {
+    .font("Open Sans", sans-serif; 600; normal);
+}
+.semibold-italic {
+    .font("Open Sans", sans-serif; 600; italic);
+}
+.light {
+    .font("Open Sans", sans-serif; 300; normal);
+} */
+
+
+// -----------------------------------------------
+// [27]. TRIANGLES Mixins
+// -----------------------------------------------
+.triangle(@_, @size, @color, @size-ratio:1){
+  width: 0;
+  height: 0;
+}
+.triangle(up, @size, @color, @size-ratio:1){
+  border-left: @size/@size-ratio solid transparent;
+  border-right: @size/@size-ratio solid transparent;
+  border-bottom: @size solid @color;
+}
+.triangle(down, @size, @color, @size-ratio:1){
+  border-left: @size/@size-ratio solid transparent;
+  border-right: @size/@size-ratio solid transparent;
+  border-top: @size solid @color;
+}
+.triangle(left, @size, @color, @size-ratio:1){
+  border-top: @size/@size-ratio solid transparent;
+  border-right: @size solid @color;
+  border-bottom: @size/@size-ratio solid transparent;
+}
+.triangle(right, @size, @color, @size-ratio:1){
+  border-top: @size/@size-ratio solid transparent;
+  border-left: @size solid @color;
+  border-bottom: @size/@size-ratio solid transparent;
+}
+
+
+// -----------------------------------------------
+// [27]. Set text highlight color Mixins
+// -----------------------------------------------
+.text-highlight(@highlight-color, @text-color){
+  ::-moz-selection {background:@highlight-color; color: @text-color}
+  ::selection    {background:@highlight-color; color: @text-color} 
+}
+
+
+// -----------------------------------------------
+// [28]. Mixins For Ratina Images
+// -----------------------------------------------
+.retina-image(@file-1x, @file-2x, @width-1x, @height-1x) {
+    background-image: url("@{file-1x}");
+    @media
+    only screen and (-webkit-min-device-pixel-ratio: 2),
+    only screen and (   min--moz-device-pixel-ratio: 2),
+    only screen and (     -o-min-device-pixel-ratio: 2/1),
+    only screen and (        min-device-pixel-ratio: 2),
+    only screen and (                min-resolution: 192dpi),
+    only screen and (                min-resolution: 2dppx) {
+        background-image: url("@{file-2x}");
+        background-size: @width-1x @height-1x;
+    }
+}
+ 
+// Usage
+/* .jumbotron {
+  .retina-image("/img/bg-1x.png", "/img/bg-2x.png", 100px, 100px);
+} */
+
+// -----------------------------------------------
+// [29]. Mixins For Center Block
+// -----------------------------------------------
+.center-block() {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+// Usage
+/* .container {
+  .center-block();
+} */
