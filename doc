@@ -1,0 +1,324 @@
+methode for defining gloabs in html
+[1].
+-------------------------------------
+<!-- build:css styles/vendor.css -->
+<!-- bower:css -->
+
+<!-- endbower -->
+<!-- endbuild -->
+
+<!-- build:js scripts/main.js -->
+<!-- inject:js -->
+
+<!-- endinject -->
+<!-- endbuild -->
+
+methode for defining gloabs in scss/less/sass
+// bower:less
+
+// endbower
+
+/* ----------------------------------------------------------------- */
+
+- need to install less globaly in our system using below command
+cmd: npm install -g less
+
+- need to install 
+cmd: npm install gulp-less --save-dev
+
+- need to install 
+cmd: npm install --save-dev gulp-watch-less
+
+- below is the rquired package for gulpfile.js
+  var less = require('gulp-less');
+  var watchLess = require('gulp-watch-less');
+  var LessAutoprefix = require('less-plugin-autoprefix');
+
+- Define task for less:
+
+  gulp.task('less', () => {
+   return gulp.src('app/styles/less/*.less')
+    .pipe(sourcemaps.init())
+    .pipe(less({
+      plugins: [autoprefix],
+    }))
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest('app/styles/css'))
+    .pipe(reload({stream: true}));
+  });
+
+
+Link For full reference:
+http://lesscss.org/3.x/features/#parent-selectors-feature-changing-selector-order
+
+Variable Interpolation:
+================================================================
+In Less varaible interpolation support in selector names, property names, URLs and @import statements.
+
+--------------------------------------------
+ex[1]. Selectors :
+--------------------------------------------
+// Variables
+@my-selector: banner;
+
+// Usage
+.@{my-selector} {
+  font-weight: bold;
+  line-height: 40px;
+  margin: 0 auto;
+}
+
+Compiles to:
+
+.banner {
+  font-weight: bold;
+  line-height: 40px;
+  margin: 0 auto;
+}
+
+--------------------------------------------
+ex[2]. URLs :
+--------------------------------------------
+
+// Variables
+@images: "../img";
+
+// Usage
+body {
+  color: #444;
+  background: url("@{images}/white-sand.png");
+}
+
+--------------------------------------------
+ex[3]. Import Statements
+--------------------------------------------
+
+// Variables
+@themes: "../../src/themes";
+
+// Usage
+@import "@{themes}/tidal-wave.less";
+
+--------------------------------------------
+ex[4]. Properties
+--------------------------------------------
+@property: color;
+
+.widget {
+  @{property}: #0ee;
+  background-@{property}: #999;
+}
+
+Compiles to:
+
+.widget {
+  color: #0ee;
+  background-color: #999;
+}
+
+=====================
+Less css style
+=====================
+Ex:1: Parent Selectors
+----------------------
+a {
+  color: blue;
+  &:hover {
+    color: green;
+  }
+}
+
+results in:
+-----------
+
+a {
+  color: blue;
+}
+
+a:hover {
+  color: green;
+}
+
+
+Ex:2: Parent Selectors
+----------------------
+.button {
+  &-ok {
+    background-image: url("ok.png");
+  }
+  &-cancel {
+    background-image: url("cancel.png");
+  }
+
+  &-custom {
+    background-image: url("custom.png");
+  }
+}
+results in:
+-----------
+.button-ok {
+  background-image: url("ok.png");
+}
+.button-cancel {
+  background-image: url("cancel.png");
+}
+.button-custom {
+  background-image: url("custom.png");
+}
+
+Ex:3: Multiple &
+-----------------------
+.link {
+  & + & {
+    color: red;
+  }
+
+  & & {
+    color: green;
+  }
+
+  && {
+    color: blue;
+  }
+
+  &, &ish {
+    color: cyan;
+  }
+}
+results in:
+-----------
+
+.link + .link {
+  color: red;
+}
+.link .link {
+  color: green;
+}
+.link.link {
+  color: blue;
+}
+.link, .linkish {
+  color: cyan;
+}
+
+Ex:4: Multiple &
+---------------------------
+.grand {
+  .parent {
+    & > & {
+      color: red;
+    }
+
+    & & {
+      color: green;
+    }
+
+    && {
+      color: blue;
+    }
+
+    &, &ish {
+      color: cyan;
+    }
+  }
+}
+
+results in:
+-----------
+
+.grand .parent > .grand .parent {
+  color: red;
+}
+.grand .parent .grand .parent {
+  color: green;
+}
+.grand .parent.grand .parent {
+  color: blue;
+}
+.grand .parent,
+.grand .parentish {
+  color: cyan;
+}
+
+Ex:5: Changing Selector Order
+----------------------------
+
+.header {
+  .menu {
+    border-radius: 5px;
+    .no-borderradius & {
+      background-image: url('images/button-background.png');
+    }
+  }
+}
+
+
+results in:
+-----------
+
+.header .menu {
+  border-radius: 5px;
+}
+.no-borderradius .header .menu {
+  background-image: url('images/button-background.png');
+}
+
+Ex:6: Combinatorial Explosion
+-----------------------------
+p, a, ul, li {
+  border-top: 2px dotted #366;
+  & + & {
+    border-top: 0;
+  }
+}
+
+results in:
+-----------
+
+p,
+a,
+ul,
+li {
+  border-top: 2px dotted #366;
+}
+p + p,
+p + a,
+p + ul,
+p + li,
+a + p,
+a + a,
+a + ul,
+a + li,
+ul + p,
+ul + a,
+ul + ul,
+ul + li,
+li + p,
+li + a,
+li + ul,
+li + li {
+  border-top: 0;
+}
+
+
+Ex:6: Extend define syntax
+-----------------------------
+.a:extend(.b) {}
+
+// the above block does the same thing as the below block
+.a {
+  &:extend(.b);
+}
+
+--------------------------------
+.e:extend(.f) {}
+.e:extend(.g) {}
+.e:extend(.f, .g) {}
+
+---------------------------
+.bucket {
+  tr { // nested ruleset with target selector
+    color: blue;
+  }
+}
+.some-class:extend(.bucket tr) {} // nested ruleset is recognized
